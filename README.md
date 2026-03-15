@@ -1,54 +1,59 @@
-# React + TypeScript + Vite
+# WealthWise 💰
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal finance and budget tracker built with React and TypeScript.
 
-Currently, two official plugins are available:
+## Live Demo
+[Link coming soon]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- React Router v6
+- React Hook Form
+- Zod
+- Recharts
 
-## Expanding the ESLint configuration
+## Features
+- Track income and expense transactions
+- Set budgets per category and track spending progress
+- Manage custom categories with icons and colors
+- Filter transactions by type
+- Dashboard with spending charts and key stats
+- Data persists across sessions via localStorage
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Skills Demonstrated
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### TypeScript
+- Interfaces and types for all data models
+- Union types and discriminated unions
+- Optional and readonly fields
+- Generics on hooks and context
+- Utility types and type inference with z.infer
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### React
+- Component composition and reusable UI components
+- useState, useReducer, useContext, useEffect, useMemo, useRef, useCallback
+- Custom hooks — useLocalStorage, useFilter
+- Smart vs dumb component pattern
+- Conditional rendering and list rendering
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Architecture
+- Global state management with Context + dispatch pattern
+- Data persistence with a generic useLocalStorage hook
+- Single source of truth — derived data computed from state
+- Forms with validation using React Hook Form + Zod
+- Separation of concerns — logic in hooks, UI in components
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Other
+- React Router v6 with nested layout routes
+- Recharts for data visualization
+- Responsive layout with Tailwind CSS
+- LocalStorage persistence across sessions
+
+## Getting Started
+```bash
+npm install
+npm run dev
 ```

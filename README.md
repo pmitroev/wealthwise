@@ -3,7 +3,7 @@
 A personal finance and budget tracker built with React and TypeScript.
 
 ## Live Demo
-[Link coming soon]
+https://wealthwise-beryl.vercel.app/
 
 ## Tech Stack
 - React 19

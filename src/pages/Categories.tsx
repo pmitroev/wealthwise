@@ -1,11 +1,12 @@
-import { useState } from "react"
-import { useTransactions } from "../context/TransactionContext"
-import Button from "../components/ui/Button"
-import Card from "../components/ui/Card"
-import AddCategoryForm from "../components/ui/AddCategoryForm"
-import CategoryCard from "../components/ui/CategoryCard"
-import type { Category } from "../types"
-import EditCategoryForm from "../components/ui/EditCategoryForm"
+import { useState } from 'react'
+
+import AddCategoryForm from '../components/ui/AddCategoryForm'
+import Button from '../components/ui/Button'
+import Card from '../components/ui/Card'
+import CategoryCard from '../components/ui/CategoryCard'
+import EditCategoryForm from '../components/ui/EditCategoryForm'
+import { useTransactions } from '../context/TransactionContext'
+import type { Category } from '../types'
 
 function Categories() {
   const [showForm, setShowForm] = useState(false)
@@ -15,14 +16,13 @@ function Categories() {
 
   return (
     <div className="flex flex-col gap-4">
-
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-800">🏷️ Categories</h1>
         <Button
           label={showForm ? 'Cancel' : '+ Add Category'}
           onClick={() => {
-            setShowForm(prev => !prev)
+            setShowForm((prev) => !prev)
             setEditingCategory(null)
           }}
           variant={showForm ? 'ghost' : 'primary'}
@@ -40,17 +40,26 @@ function Categories() {
       )}
 
       {/* Category List */}
-      {categories.length > 0 ? categories.map(category => (
-        editingCategory?.id === category.id ? 
-        <EditCategoryForm key={category.id} category={category} onCancel={() => setEditingCategory(null)} onSuccess={() => setEditingCategory(null)}/> :
-        <CategoryCard 
-          key={category.id} 
-          category={category} 
-          onEdit={(category) => setEditingCategory(category)}/>
-      )) :
-      <p className="text-sm text-gray-500">
-        There aren't any categories
-      </p>}
+      {categories.length > 0 ? (
+        categories.map((category) =>
+          editingCategory?.id === category.id ? (
+            <EditCategoryForm
+              key={category.id}
+              category={category}
+              onCancel={() => setEditingCategory(null)}
+              onSuccess={() => setEditingCategory(null)}
+            />
+          ) : (
+            <CategoryCard
+              key={category.id}
+              category={category}
+              onEdit={(category) => setEditingCategory(category)}
+            />
+          )
+        )
+      ) : (
+        <p className="text-sm text-gray-500">There aren't any categories</p>
+      )}
     </div>
   )
 }

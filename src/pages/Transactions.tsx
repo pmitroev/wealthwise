@@ -1,24 +1,25 @@
 import { useState } from 'react'
+
+import AddTransactionForm from '../components/ui/AddTransactionForm'
 import Badge from '../components/ui/Badge'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
-import AddTransactionForm from '../components/ui/AddTransactionForm'
 import { useTransactions } from '../context/TransactionContext'
 
 function Transactions() {
-  const { filteredTransactions, dispatch, state, categories } = useTransactions()
+  const { filteredTransactions, dispatch, state, categories } =
+    useTransactions()
   const [showForm, setShowForm] = useState(false)
   const currentFilter = state.filter
 
   return (
     <div className="flex flex-col gap-4">
-
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-800">💸 Transactions</h1>
         <Button
           label={showForm ? 'Cancel' : '+ Add Transaction'}
-          onClick={() => setShowForm(prev => !prev)}
+          onClick={() => setShowForm((prev) => !prev)}
           variant={showForm ? 'ghost' : 'primary'}
         />
       </div>
@@ -29,70 +30,96 @@ function Transactions() {
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             New Transaction
           </h2>
-          <AddTransactionForm categories={categories} onSuccess={() => setShowForm(false)} />
+          <AddTransactionForm
+            categories={categories}
+            onSuccess={() => setShowForm(false)}
+          />
         </Card>
       )}
 
       {/*Transaction Filter*/}
-      <div className='flex items-center justify-center'>
-        <Button 
-          label='All' 
+      <div className="flex items-center justify-center">
+        <Button
+          label="All"
           variant={currentFilter === 'all' ? 'primary' : 'ghost'}
-          onClick={() => dispatch({
-            type: 'SET_FILTER',
-            payload: 'all'
-          })}/>
-          <Button 
-          label='Income' 
+          onClick={() =>
+            dispatch({
+              type: 'SET_FILTER',
+              payload: 'all',
+            })
+          }
+        />
+        <Button
+          label="Income"
           variant={currentFilter === 'income' ? 'primary' : 'ghost'}
-          onClick={() => dispatch({
-            type: 'SET_FILTER',
-            payload: 'income'
-          })}/>
-          <Button 
-          label='Expense' 
-          variant={currentFilter === 'expense' ? 'primary' : 'ghost'} 
-          onClick={() => dispatch({
-            type: 'SET_FILTER',
-            payload: 'expense'
-          })}/>
+          onClick={() =>
+            dispatch({
+              type: 'SET_FILTER',
+              payload: 'income',
+            })
+          }
+        />
+        <Button
+          label="Expense"
+          variant={currentFilter === 'expense' ? 'primary' : 'ghost'}
+          onClick={() =>
+            dispatch({
+              type: 'SET_FILTER',
+              payload: 'expense',
+            })
+          }
+        />
       </div>
       {/* Transaction List */}
-      {filteredTransactions.length > 0 ? filteredTransactions.map(transaction => (
-        <Card key={transaction.id}>
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-1">
-              <p className="font-medium text-gray-800">
-                {transaction.description ?? 'No description'}
-              </p>
-              <div className="flex items-center gap-2">
-                <Badge label={transaction.type} variant={transaction.type} />
-                <span className="text-xs text-gray-400">{transaction.category}</span>
-                <span className="text-xs text-gray-400">· {transaction.date}</span>
+      {filteredTransactions.length > 0 ? (
+        filteredTransactions.map((transaction) => (
+          <Card key={transaction.id}>
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-1">
+                <p className="font-medium text-gray-800">
+                  {transaction.description ?? 'No description'}
+                </p>
+                <div className="flex items-center gap-2">
+                  <Badge label={transaction.type} variant={transaction.type} />
+                  <span className="text-xs text-gray-400">
+                    {transaction.category}
+                  </span>
+                  <span className="text-xs text-gray-400">
+                    · {transaction.date}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <p
+                  className={`font-bold text-lg ${
+                    transaction.type === 'income'
+                      ? 'text-green-600'
+                      : 'text-red-500'
+                  }`}
+                >
+                  {transaction.type === 'income' ? '+' : '-'}$
+                  {transaction.amount.toLocaleString()}
+                </p>
+                <Button
+                  label="Delete"
+                  variant="ghost"
+                  onClick={() =>
+                    dispatch({
+                      type: 'DELETE_TRANSACTION',
+                      payload: transaction.id,
+                    })
+                  }
+                />
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <p className={`font-bold text-lg ${
-                transaction.type === 'income' ? 'text-green-600' : 'text-red-500'
-              }`}>
-                {transaction.type === 'income' ? '+' : '-'}
-                ${transaction.amount.toLocaleString()}
-              </p>
-              <Button
-                label="Delete"
-                variant="ghost"
-                onClick={() => dispatch({
-                  type: 'DELETE_TRANSACTION',
-                  payload: transaction.id
-                })}
-              />
-            </div>
-          </div>
-        </Card>
-      )) :
-      <p className="text-sm text-gray-500">
-        There aren't any {currentFilter === 'all' ? '' : currentFilter} transactions
-      </p>}
+          </Card>
+        ))
+      ) : (
+        <p className="text-sm text-gray-500">
+          There aren't any {currentFilter === 'all' ? '' : currentFilter}{' '}
+          transactions
+        </p>
+      )}
     </div>
   )
 }

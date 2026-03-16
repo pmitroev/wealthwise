@@ -1,19 +1,21 @@
-import { useTransactions } from '../context/TransactionContext'
-import StatCard from '../components/ui/StatCard'
 import Card from '../components/ui/Card'
 import ExpenseChart from '../components/ui/ExpenseChart'
 import RecentTransactions from '../components/ui/RecentTransactions'
+import StatCard from '../components/ui/StatCard'
+import { useTransactions } from '../context/TransactionContext'
 
 function Dashboard() {
   const { balance, totalIncome, totalExpenses, state } = useTransactions()
 
   const transactionsCount = state.transactions.length
 
-  const expenseCategories = [...new Set(
-    state.transactions
-      .filter(t => t.type === 'expense')
-      .map(t => t.category)
-  )].length
+  const expenseCategories = [
+    ...new Set(
+      state.transactions
+        .filter((t) => t.type === 'expense')
+        .map((t) => t.category)
+    ),
+  ].length
 
   return (
     <div className="flex flex-col gap-6">
@@ -21,12 +23,17 @@ function Dashboard() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard title="Total Balance"  amount={balance}       type="balance" />
-        <StatCard title="Total Income"   amount={totalIncome}   type="income"  />
-        <StatCard title="Total Expenses" amount={totalExpenses} type="expense" />
+        <StatCard title="Total Balance" amount={balance} type="balance" />
+        <StatCard title="Total Income" amount={totalIncome} type="income" />
+        <StatCard
+          title="Total Expenses"
+          amount={totalExpenses}
+          type="expense"
+        />
       </div>
       <p className="text-sm text-gray-500">
-        You have {transactionsCount} {transactionsCount === 1 ? 'transaction' : 'transactions'} this month
+        You have {transactionsCount}{' '}
+        {transactionsCount === 1 ? 'transaction' : 'transactions'} this month
       </p>
 
       {/* Chart + Recent Transactions */}

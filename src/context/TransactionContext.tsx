@@ -1,7 +1,8 @@
-import { createContext, useContext, type ReactNode } from 'react'
-import type { Transaction, AppFilter, Budget, Category } from '../types'
-import useLocalStorage from '../hooks/useLocalStorage'
+import { type ReactNode, createContext, useContext } from 'react'
+
 import useFilter from '../hooks/useFilter'
+import useLocalStorage from '../hooks/useLocalStorage'
+import type { AppFilter, Budget, Category, Transaction } from '../types'
 
 // --- State & Actions ---
 interface TransactionState {
@@ -11,25 +12,25 @@ interface TransactionState {
   filter: AppFilter
 }
 
-type BudgetAction = 
-  | { type: 'ADD_BUDGET'; payload: Budget } 
-  | { type: 'DELETE_BUDGET'; payload: string}
+type BudgetAction =
+  | { type: 'ADD_BUDGET'; payload: Budget }
+  | { type: 'DELETE_BUDGET'; payload: string }
 
 type TransactionAction =
-  | { type: 'ADD_TRANSACTION';    payload: Transaction }
+  | { type: 'ADD_TRANSACTION'; payload: Transaction }
   | { type: 'DELETE_TRANSACTION'; payload: string }
-  | { type: 'SET_FILTER';         payload: AppFilter }
+  | { type: 'SET_FILTER'; payload: AppFilter }
 
-type CategoryAction = 
+type CategoryAction =
   | { type: 'ADD_CATEGORY'; payload: Category }
   | { type: 'DELETE_CATEGORY'; payload: string }
-  | { type: 'UPDATE_CATEGORY'; payload: Category}
+  | { type: 'UPDATE_CATEGORY'; payload: Category }
 
 const initialState: TransactionState = {
   filter: 'all',
   transactions: [],
   budgets: [],
-  categories: []
+  categories: [],
 }
 
 // --- Context ---
@@ -77,10 +78,10 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   const dispatch = (action: TransactionAction) => {
     switch (action.type) {
       case 'ADD_TRANSACTION':
-        setTransactions(prev => [action.payload, ...prev])
+        setTransactions((prev) => [action.payload, ...prev])
         break
       case 'DELETE_TRANSACTION':
-        setTransactions(prev => prev.filter(t => t.id !== action.payload))
+        setTransactions((prev) => prev.filter((t) => t.id !== action.payload))
         break
       case 'SET_FILTER':
         setFilter(action.payload)
@@ -91,10 +92,10 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   const budgetDispatch = (action: BudgetAction) => {
     switch (action.type) {
       case 'ADD_BUDGET':
-        setBudgets(prev => [action.payload, ...prev])
+        setBudgets((prev) => [action.payload, ...prev])
         break
       case 'DELETE_BUDGET':
-        setBudgets((prev => prev.filter(b => b.id !== action.payload)))
+        setBudgets((prev) => prev.filter((b) => b.id !== action.payload))
         break
     }
   }
@@ -102,14 +103,14 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   const categoryDispatch = (action: CategoryAction) => {
     switch (action.type) {
       case 'ADD_CATEGORY':
-        setCategories(prev => [action.payload, ...prev])
+        setCategories((prev) => [action.payload, ...prev])
         break
       case 'DELETE_CATEGORY':
-        setCategories((prev => prev.filter(c => c.id !== action.payload)))
+        setCategories((prev) => prev.filter((c) => c.id !== action.payload))
         break
       case 'UPDATE_CATEGORY':
-        setCategories(prev =>
-          prev.map(c => c.id === action.payload.id ? action.payload : c)
+        setCategories((prev) =>
+          prev.map((c) => (c.id === action.payload.id ? action.payload : c))
         )
         break
     }
@@ -118,22 +119,29 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   const filteredTransactions = useFilter(transactions, filter)
 
   const totalIncome = transactions
-    .filter(t => t.type === 'income')
+    .filter((t) => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0)
 
   const totalExpenses = transactions
-    .filter(t => t.type === 'expense')
+    .filter((t) => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0)
 
   const balance = totalIncome - totalExpenses
 
   return (
     <TransactionContext.Provider
-      value={{ state, dispatch, 
-              filteredTransactions, 
-              totalIncome, totalExpenses, balance, 
-              budgets, budgetDispatch,
-              categories, categoryDispatch }}
+      value={{
+        state,
+        dispatch,
+        filteredTransactions,
+        totalIncome,
+        totalExpenses,
+        balance,
+        budgets,
+        budgetDispatch,
+        categories,
+        categoryDispatch,
+      }}
     >
       {children}
     </TransactionContext.Provider>

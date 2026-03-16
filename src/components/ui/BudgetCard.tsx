@@ -1,8 +1,10 @@
-import { useMemo } from "react"
-import type { Budget, Transaction } from "../../types"
-import { useTransactions } from "../../context/TransactionContext"
-import Button from "./Button"
-import Card from "./Card"
+import { useMemo } from 'react'
+
+import { useTransactions } from '../../context/TransactionContext'
+import type { Budget, Transaction } from '../../types'
+
+import Button from './Button'
+import Card from './Card'
 
 interface BudgetCardProps {
   budget: Budget
@@ -12,11 +14,13 @@ interface BudgetCardProps {
 function BudgetCard({ budget, transactions }: BudgetCardProps) {
   const { budgetDispatch } = useTransactions()
 
-  const spent = useMemo(() =>
-    transactions
-      .filter(t => t.category === budget.category && t.type === 'expense')
-      .reduce((sum, t) => sum + t.amount, 0)
-  , [transactions, budget.category])
+  const spent = useMemo(
+    () =>
+      transactions
+        .filter((t) => t.category === budget.category && t.type === 'expense')
+        .reduce((sum, t) => sum + t.amount, 0),
+    [transactions, budget.category]
+  )
 
   const percentage = Math.min((spent / budget.limit) * 100, 100)
   const isOver = spent > budget.limit
@@ -27,7 +31,6 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
   return (
     <Card>
       <div className="flex items-center justify-between mb-3">
-
         {/* Left — category + note */}
         <div className="flex flex-col gap-0.5">
           <span className="font-semibold text-gray-800">{budget.category}</span>
@@ -39,7 +42,9 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
         {/* Right — amounts + delete */}
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className={`font-bold text-lg ${isOver ? 'text-red-500' : 'text-gray-800'}`}>
+            <p
+              className={`font-bold text-lg ${isOver ? 'text-red-500' : 'text-gray-800'}`}
+            >
               {format(spent)}
             </p>
             <p className="text-xs text-gray-400">of {format(budget.limit)}</p>
@@ -47,13 +52,14 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
           <Button
             label="Delete"
             variant="ghost"
-            onClick={() => budgetDispatch({
-              type: 'DELETE_BUDGET',
-              payload: budget.id
-            })}
+            onClick={() =>
+              budgetDispatch({
+                type: 'DELETE_BUDGET',
+                payload: budget.id,
+              })
+            }
           />
         </div>
-
       </div>
 
       {/* Progress bar */}
@@ -66,9 +72,13 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
 
       {/* Footer — percentage + warning */}
       <div className="flex items-center justify-between mt-2">
-        <span className="text-xs text-gray-400">{Math.round(percentage)}% used</span>
+        <span className="text-xs text-gray-400">
+          {Math.round(percentage)}% used
+        </span>
         {isOver && (
-          <span className="text-xs text-red-500 font-medium">⚠️ Over budget!</span>
+          <span className="text-xs text-red-500 font-medium">
+            ⚠️ Over budget!
+          </span>
         )}
       </div>
     </Card>

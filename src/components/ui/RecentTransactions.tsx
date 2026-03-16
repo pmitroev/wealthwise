@@ -1,4 +1,5 @@
 import { type Transaction } from '../../types'
+
 import Badge from './Badge'
 
 interface RecentTransactionsProps {
@@ -10,7 +11,7 @@ function RecentTransactions({ transactions }: RecentTransactionsProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      {recent.map(transaction => (
+      {recent.map((transaction) => (
         <div
           key={transaction.id}
           className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0"
@@ -24,11 +25,13 @@ function RecentTransactions({ transactions }: RecentTransactionsProps) {
               <span className="text-xs text-gray-400">{transaction.date}</span>
             </div>
           </div>
-          <p className={`font-semibold ${
-            transaction.type === 'income' ? 'text-green-600' : 'text-red-500'
-          }`}>
-            {transaction.type === 'income' ? '+' : '-'}
-            ${transaction.amount.toLocaleString()}
+          <p
+            className={`font-semibold ${
+              transaction.type === 'income' ? 'text-green-600' : 'text-red-500'
+            }`}
+          >
+            {transaction.type === 'income' ? '+' : '-'}$
+            {transaction.amount.toLocaleString()}
           </p>
         </div>
       ))}

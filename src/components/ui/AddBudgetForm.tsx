@@ -1,49 +1,36 @@
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useTransactions } from "../../context/TransactionContext"
-import type { Category } from "../../types"
+
+import { useTransactions } from '../../context/TransactionContext'
+import type { Category } from '../../types'
+
+import { Field, inputClass } from './Field'
 
 const BudgetSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   limit: z.preprocess(
-    val => parseFloat(String(val)),
+    (val) => parseFloat(String(val)),
     z.number().positive('Must be a positive number')
   ),
-  note: z.string().optional()
+  note: z.string().optional(),
 })
-
-interface FieldProps {
-  label: string
-  error?: string
-  children: React.ReactNode
-}
-
-function Field({ label, error, children }: FieldProps) {
-  return (
-    <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
-      {children}
-      {error && <p className="text-xs text-red-500">{error}</p>}
-    </div>
-  )
-}
-
-const inputClass = (hasError: boolean) =>
-  `border rounded-lg px-3 py-2 text-sm outline-none transition-colors
-   focus:ring-2 focus:ring-blue-500
-   ${hasError ? 'border-red-400' : 'border-gray-200'}`
-
 
 interface AddBudgetFormProps {
   categories: Category[]
-  onSuccess?: () => void  // called after successful submit
+  onSuccess?: () => void // called after successful submit
 }
 
 function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
   const { budgetDispatch } = useTransactions()
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
     resolver: zodResolver(BudgetSchema),
   })
 
@@ -60,10 +47,7 @@ function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Category */}
       <Field label="Category" error={errors.category?.message}>
         <select
@@ -71,7 +55,7 @@ function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
           className={inputClass(!!errors.category)}
         >
           <option value="">Select a category</option>
-          {categories.map(cat => (
+          {categories.map((cat) => (
             <option key={cat.id} value={cat.name}>
               {cat.icon} {cat.name}
             </option>
@@ -98,7 +82,6 @@ function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
           className={inputClass(!!errors.note)}
         />
       </Field>
-
 
       <button
         type="submit"

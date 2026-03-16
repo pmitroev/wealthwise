@@ -1,18 +1,26 @@
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+
 import { type Transaction } from '../../types'
 
 interface ExpenseChartProps {
   transactions: Transaction[]
 }
 
-const COLORS = ['#3b82f6', '#22c55e', '#f97316', '#a855f7', '#ef4444', '#eab308']
+const COLORS = [
+  '#3b82f6',
+  '#22c55e',
+  '#f97316',
+  '#a855f7',
+  '#ef4444',
+  '#eab308',
+]
 
 function ExpenseChart({ transactions }: ExpenseChartProps) {
   // Group expenses by category and sum amounts
   const data = transactions
-    .filter(t => t.type === 'expense')
+    .filter((t) => t.type === 'expense')
     .reduce((acc: { name: string; value: number }[], t) => {
-      const existing = acc.find(item => item.name === t.category)
+      const existing = acc.find((item) => item.name === t.category)
       if (existing) {
         existing.value += t.amount
       } else {
@@ -31,7 +39,7 @@ function ExpenseChart({ transactions }: ExpenseChartProps) {
 
   const dataWithColors = data.map((item, index) => ({
     ...item,
-    fill: COLORS[index % COLORS.length]
+    fill: COLORS[index % COLORS.length],
   }))
 
   return (
@@ -49,7 +57,10 @@ function ExpenseChart({ transactions }: ExpenseChartProps) {
         <Tooltip
           formatter={(value) => {
             if (typeof value !== 'number') return String(value)
-            return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+            return value.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })
           }}
         />
         <Legend />

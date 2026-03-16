@@ -1,8 +1,12 @@
 import { useForm } from 'react-hook-form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
 import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
+
+import { Field, inputClass } from './Field'
 
 // --- Schema ---
 const TransactionSchema = z.object({
@@ -16,43 +20,28 @@ const TransactionSchema = z.object({
   date: z.string().min(1, 'Date is required'),
 })
 
-// --- Reusable field wrapper ---
-interface FieldProps {
-  label: string
-  error?: string
-  children: React.ReactNode
-}
-
-function Field({ label, error, children }: FieldProps) {
-  return (
-    <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
-      {children}
-      {error && <p className="text-xs text-red-500">{error}</p>}
-    </div>
-  )
-}
-
-// --- Input className helper ---
-const inputClass = (hasError: boolean) =>
-  `border rounded-lg px-3 py-2 text-sm outline-none transition-colors
-   focus:ring-2 focus:ring-blue-500
-   ${hasError ? 'border-red-400' : 'border-gray-200'}`
-
 // --- Form Component ---
 interface AddTransactionFormProps {
   categories: Category[]
-  onSuccess?: () => void  // called after successful submit
+  onSuccess?: () => void // called after successful submit
 }
 
-function AddTransactionForm({ categories, onSuccess }: AddTransactionFormProps) {
+function AddTransactionForm({
+  categories,
+  onSuccess,
+}: AddTransactionFormProps) {
   const { dispatch } = useTransactions()
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
-  resolver: zodResolver(TransactionSchema),
-  defaultValues: {
-    type: 'expense',
-    date: new Date().toISOString().split('T')[0],
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(TransactionSchema),
+    defaultValues: {
+      type: 'expense',
+      date: new Date().toISOString().split('T')[0],
     },
   })
 
@@ -60,19 +49,16 @@ function AddTransactionForm({ categories, onSuccess }: AddTransactionFormProps) 
     dispatch({
       type: 'ADD_TRANSACTION',
       payload: {
-        id: crypto.randomUUID(),  // built-in browser API for unique IDs
+        id: crypto.randomUUID(), // built-in browser API for unique IDs
         ...data,
       },
     })
     reset()
-    onSuccess?.()  // 👈 optional chaining — calls it only if it was passed
+    onSuccess?.() // 👈 optional chaining — calls it only if it was passed
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Description */}
       <Field label="Description" error={errors.description?.message}>
         <input
@@ -95,10 +81,7 @@ function AddTransactionForm({ categories, onSuccess }: AddTransactionFormProps) 
 
       {/* Type */}
       <Field label="Type" error={errors.type?.message}>
-        <select
-          {...register('type')}
-          className={inputClass(!!errors.type)}
-        >
+        <select {...register('type')} className={inputClass(!!errors.type)}>
           <option value="expense">Expense</option>
           <option value="income">Income</option>
         </select>
@@ -111,7 +94,7 @@ function AddTransactionForm({ categories, onSuccess }: AddTransactionFormProps) 
           className={inputClass(!!errors.category)}
         >
           <option value="">Select a category</option>
-          {categories.map(cat => (
+          {categories.map((cat) => (
             <option key={cat.id} value={cat.name}>
               {cat.icon} {cat.name}
             </option>

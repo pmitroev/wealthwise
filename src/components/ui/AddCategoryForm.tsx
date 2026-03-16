@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { useTransactions } from '../../context/TransactionContext'
 
+import Button from './Button'
 import { Field, inputClass } from './Field'
 
 const CategorySchema = z.object({
@@ -65,13 +66,7 @@ function AddCategoryForm({ onSuccess }: AddCategoryFormProps) {
         <input type="color" {...register('color')} />
       </Field>
 
-      <button
-        type="submit"
-        className="bg-blue-600 text-white py-2.5 rounded-lg font-medium
-                   hover:bg-blue-700 transition-colors mt-2"
-      >
-        Add Category
-      </button>
+      <Button type="submit" label="Add Category"></Button>
     </form>
   )
 }

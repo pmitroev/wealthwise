@@ -29,7 +29,7 @@ function CategoryCard({ category, onEdit }: CategoryCardProps) {
         <div className="flex items-center gap-1">
           <Button
             label="Edit"
-            variant="ghost"
+            variant="primary"
             onClick={() => onEdit(category)}
           />
           <Button

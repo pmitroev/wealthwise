@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
 
+import Button from './Button'
 import { Field, inputClass } from './Field'
 
 // --- Schema ---
@@ -111,13 +112,7 @@ function AddTransactionForm({
         />
       </Field>
 
-      <button
-        type="submit"
-        className="bg-blue-600 text-white py-2.5 rounded-lg font-medium
-                   hover:bg-blue-700 transition-colors mt-2"
-      >
-        Add Transaction
-      </button>
+      <Button type="submit" label="Add Transaction"></Button>
     </form>
   )
 }

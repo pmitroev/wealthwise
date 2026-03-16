@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
 
+import Button from './Button'
 import { Field, inputClass } from './Field'
 
 const BudgetSchema = z.object({
@@ -83,13 +84,7 @@ function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
         />
       </Field>
 
-      <button
-        type="submit"
-        className="bg-blue-600 text-white py-2.5 rounded-lg font-medium
-                   hover:bg-blue-700 transition-colors mt-2"
-      >
-        Add Budget
-      </button>
+      <Button type="submit" label="Add budget"></Button>
     </form>
   )
 }

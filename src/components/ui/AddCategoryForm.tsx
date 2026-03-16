@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { useTransactions } from '../../context/TransactionContext'
 
 import Button from './Button'
-import { Field, inputClass } from './Field'
+import { InputField } from './InputField'
 
 const CategorySchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -44,27 +44,24 @@ function AddCategoryForm({ onSuccess }: AddCategoryFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Name */}
-      <Field label="Name" error={errors.name?.message}>
-        <input
-          {...register('name')}
-          placeholder="e.g. Housing"
-          className={inputClass(!!errors.name)}
-        />
-      </Field>
+      <InputField
+        label="Name"
+        error={errors.name?.message}
+        registration={register('name')}
+      />
 
-      {/* Icon */}
-      <Field label="Icon" error={errors.icon?.message}>
-        <input
-          {...register('icon')}
-          placeholder="e.g. 🏠"
-          className={inputClass(!!errors.icon)}
-        />
-      </Field>
+      <InputField
+        label="Icon"
+        error={errors.icon?.message}
+        registration={register('icon')}
+      />
 
       {/* Color */}
-      <Field label="Color" error={errors.color?.message}>
-        <input type="color" {...register('color')} />
-      </Field>
+      <InputField
+        label="Color"
+        error={errors.color?.message}
+        registration={register('color')}
+      />
 
       <Button type="submit" label="Add Category"></Button>
     </form>

@@ -1,11 +1,8 @@
-// src/components/ui/Field.tsx
-import { useEffect, useRef } from 'react'
-
 interface FieldProps {
   label: string
   error?: string
   children: React.ReactNode
-  autoFocus?: boolean // 👈 the new prop
+  autoFocus?: boolean
 }
 
 export const inputClass = (hasError: boolean) =>
@@ -13,23 +10,9 @@ export const inputClass = (hasError: boolean) =>
    focus:ring-2 focus:ring-blue-500
    ${hasError ? 'border-red-400' : 'border-gray-200'}`
 
-export function Field({
-  label,
-  error,
-  children,
-  autoFocus = false,
-}: FieldProps) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (autoFocus) {
-      const input = ref.current?.querySelector('input')
-      input?.focus()
-    }
-  }, [autoFocus])
-
+export function Field({ label, error, children }: FieldProps) {
   return (
-    <div ref={ref} className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-700">{label}</label>
       {children}
       {error && <p className="text-xs text-red-500">{error}</p>}

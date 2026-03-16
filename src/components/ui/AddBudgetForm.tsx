@@ -7,7 +7,8 @@ import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
 
 import Button from './Button'
-import { Field, inputClass } from './Field'
+import { InputField } from './InputField'
+import { SelectField } from './SelectField'
 
 const BudgetSchema = z.object({
   category: z.string().min(1, 'Category is required'),
@@ -50,39 +51,33 @@ function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Category */}
-      <Field label="Category" error={errors.category?.message}>
-        <select
-          {...register('category')}
-          className={inputClass(!!errors.category)}
-        >
-          <option value="">Select a category</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.name}>
-              {cat.icon} {cat.name}
-            </option>
-          ))}
-        </select>
-      </Field>
+      <SelectField
+        label="Category"
+        error={errors.category?.message}
+        registration={register('category')}
+        options={categories.map((cat) => ({
+          value: cat.name,
+          label: `${cat.icon} ${cat.name}`,
+        }))}
+      />
 
       {/* Limit */}
-      <Field label="Amount ($)" error={errors.limit?.message}>
-        <input
-          {...register('limit')}
-          type="number"
-          step="1"
-          placeholder="0.00"
-          className={inputClass(!!errors.limit)}
-        />
-      </Field>
+      <InputField
+        label="Amount ($)"
+        error={errors.limit?.message}
+        registration={register('limit')}
+        type="number"
+        step="1"
+        placeholder="0.00"
+      />
 
       {/* Note */}
-      <Field label="Note (optional)" error={errors.note?.message}>
-        <input
-          {...register('note')}
-          placeholder="Budget for holiday"
-          className={inputClass(!!errors.note)}
-        />
-      </Field>
+      <InputField
+        label="Note (optional)"
+        error={errors.note?.message}
+        registration={register('note')}
+        placeholder="Budget for holiday"
+      />
 
       <Button type="submit" label="Add budget"></Button>
     </form>

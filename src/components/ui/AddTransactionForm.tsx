@@ -7,7 +7,8 @@ import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
 
 import Button from './Button'
-import { Field, inputClass } from './Field'
+import { InputField } from './InputField'
+import { SelectField } from './SelectField'
 
 // --- Schema ---
 const TransactionSchema = z.object({
@@ -61,56 +62,52 @@ function AddTransactionForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Description */}
-      <Field label="Description" error={errors.description?.message}>
-        <input
-          {...register('description')}
-          placeholder="e.g. Grocery shopping"
-          className={inputClass(!!errors.description)}
-        />
-      </Field>
+      <InputField
+        label="Description"
+        error={errors.description?.message}
+        registration={register('description')}
+        placeholder="e.g. Grocery shopping"
+      />
 
       {/* Amount */}
-      <Field label="Amount ($)" error={errors.amount?.message}>
-        <input
-          {...register('amount')}
-          type="number"
-          step="0.01"
-          placeholder="0.00"
-          className={inputClass(!!errors.amount)}
-        />
-      </Field>
+      <InputField
+        label="Amount ($)"
+        error={errors.amount?.message}
+        registration={register('amount')}
+        type="number"
+        step="0.01"
+        placeholder="0.00"
+      />
 
       {/* Type */}
-      <Field label="Type" error={errors.type?.message}>
-        <select {...register('type')} className={inputClass(!!errors.type)}>
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
-        </select>
-      </Field>
+      <SelectField
+        label="Type"
+        error={errors.type?.message}
+        registration={register('type')}
+        options={[
+          { value: 'expense', label: 'Expense' },
+          { value: 'income', label: 'Income' },
+        ]}
+      />
 
       {/* Category */}
-      <Field label="Category" error={errors.category?.message}>
-        <select
-          {...register('category')}
-          className={inputClass(!!errors.category)}
-        >
-          <option value="">Select a category</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.name}>
-              {cat.icon} {cat.name}
-            </option>
-          ))}
-        </select>
-      </Field>
+      <SelectField
+        label="Category"
+        error={errors.category?.message}
+        registration={register('category')}
+        options={categories.map((cat) => ({
+          value: cat.name,
+          label: `${cat.icon} ${cat.name}`,
+        }))}
+      />
 
       {/* Date */}
-      <Field label="Date" error={errors.date?.message}>
-        <input
-          {...register('date')}
-          type="date"
-          className={inputClass(!!errors.date)}
-        />
-      </Field>
+      <InputField
+        label="Date"
+        error={errors.date?.message}
+        registration={register('date')}
+        type="date"
+      />
 
       <Button type="submit" label="Add Transaction"></Button>
     </form>

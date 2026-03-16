@@ -7,7 +7,7 @@ import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
 
 import Button from './Button'
-import { Field, inputClass } from './Field'
+import { InputField } from './InputField'
 
 const CategorySchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -57,30 +57,34 @@ function EditCategoryForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Name */}
-      <Field label="Name" error={errors.name?.message} autoFocus>
-        <input {...register('name')} className={inputClass(!!errors.name)} />
-      </Field>
+      <InputField
+        label="Name"
+        error={errors.name?.message}
+        registration={register('name')}
+        autoFocus
+      />
 
       {/* Icon */}
-      <Field label="Icon" error={errors.icon?.message}>
-        <input
-          {...register('icon')}
-          placeholder="e.g. 🏠"
-          className={inputClass(!!errors.icon)}
-        />
-      </Field>
+      <InputField
+        label="Icon"
+        error={errors.icon?.message}
+        registration={register('icon')}
+      />
 
       {/* Color */}
-      <Field label="Color" error={errors.color?.message}>
-        <input type="color" {...register('color')} />
-      </Field>
+      <InputField
+        label="Color"
+        type="color"
+        error={errors.color?.message}
+        registration={register('color')}
+      />
 
       <div className="flex gap-2 mt-2 justify-center">
         <Button type="submit" label="Update Category"></Button>
         <Button
           type="button"
           label="Cancel"
-          onClick={() => onCancel}
+          onClick={() => onCancel?.()}
           variant="ghost"
         ></Button>
       </div>

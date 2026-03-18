@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import AddBudgetForm from '../components/ui/AddBudgetForm'
 import BudgetCard from '../components/ui/BudgetCard'
+import BudgetTable from '../components/ui/BudgetTable'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import { useTransactions } from '../context/TransactionContext'
@@ -33,6 +34,11 @@ function Budgets() {
             onSuccess={() => setShowForm(false)}
           />
         </Card>
+      )}
+
+      {/* Summary Table */}
+      {budgets.length > 0 && (
+        <BudgetTable budgets={budgets} transactions={state.transactions} />
       )}
 
       {/* Budget List */}

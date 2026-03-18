@@ -1,3 +1,5 @@
+import logo from '../../assets/logo.png'
+
 interface NavbarProps {
   onMenuClick: () => void
 }
@@ -13,7 +15,7 @@ function Navbar({ onMenuClick }: NavbarProps) {
           ☰
         </button>
         <div className="flex items-center gap-3">
-          <img src="../../../public/logo.png  " alt="logo" />
+          <img src={logo} alt="logo" />
           <span className="mt-1 text-xl font-bold text-[#00a7e1]">
             WealthWise
           </span>

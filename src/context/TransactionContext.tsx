@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useContext } from 'react'
+import { type ReactNode, createContext, useContext, useMemo } from 'react'
 
 import useFilter from '../hooks/useFilter'
 import useLocalStorage from '../hooks/useLocalStorage'
@@ -36,15 +36,14 @@ const initialState: TransactionState = {
 // --- Context ---
 interface TransactionContextType {
   state: TransactionState
-  dispatch: React.Dispatch<TransactionAction>
-  // Derived data — computed from state, not stored separately
-  filteredTransactions: Transaction[]
+  balance: number
   totalIncome: number
   totalExpenses: number
-  balance: number
+  filteredTransactions: Transaction[]
   budgets: Budget[]
-  budgetDispatch: (action: BudgetAction) => void
   categories: Category[]
+  dispatch: React.Dispatch<TransactionAction>
+  budgetDispatch: (action: BudgetAction) => void
   categoryDispatch: (action: CategoryAction) => void
 }
 
@@ -118,13 +117,15 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
 
   const filteredTransactions = useFilter(transactions, filter)
 
-  const totalIncome = transactions
-    .filter((t) => t.type === 'income')
-    .reduce((sum, t) => sum + t.amount, 0)
+  const totalIncome = useMemo(
+    () => transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0),
+    [transactions]
+  )
 
-  const totalExpenses = transactions
-    .filter((t) => t.type === 'expense')
-    .reduce((sum, t) => sum + t.amount, 0)
+  const totalExpenses = useMemo(
+    () => transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0),
+    [transactions]
+  )
 
   const balance = totalIncome - totalExpenses
 
@@ -132,14 +133,14 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
     <TransactionContext.Provider
       value={{
         state,
-        dispatch,
-        filteredTransactions,
+        balance,
         totalIncome,
         totalExpenses,
-        balance,
+        filteredTransactions,
         budgets,
-        budgetDispatch,
         categories,
+        dispatch,
+        budgetDispatch,
         categoryDispatch,
       }}
     >

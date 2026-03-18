@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import AddCategoryForm from '../components/ui/AddCategoryForm'
 import Button from '../components/ui/Button'
@@ -11,6 +11,11 @@ import type { Category } from '../types'
 function Categories() {
   const [showForm, setShowForm] = useState(false)
   const [editingCategory, setEditingCategory] = useState<Category | null>(null)
+
+  const handleEdit = useCallback(
+    (category: Category) => setEditingCategory(category),
+    [setEditingCategory]
+  )
 
   const { categories } = useTransactions()
 
@@ -53,7 +58,7 @@ function Categories() {
             <CategoryCard
               key={category.id}
               category={category}
-              onEdit={(category) => setEditingCategory(category)}
+              onEdit={handleEdit}
             />
           )
         )

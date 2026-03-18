@@ -118,12 +118,18 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   const filteredTransactions = useFilter(transactions, filter)
 
   const totalIncome = useMemo(
-    () => transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0),
+    () =>
+      transactions
+        .filter((t) => t.type === 'income')
+        .reduce((sum, t) => sum + t.amount, 0),
     [transactions]
   )
 
   const totalExpenses = useMemo(
-    () => transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0),
+    () =>
+      transactions
+        .filter((t) => t.type === 'expense')
+        .reduce((sum, t) => sum + t.amount, 0),
     [transactions]
   )
 

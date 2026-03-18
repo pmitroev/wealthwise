@@ -1,12 +1,14 @@
+import { useMemo } from 'react'
+
 import {
+  type ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-  type ColumnDef,
 } from '@tanstack/react-table'
-import { useMemo } from 'react'
 
 import type { Budget, Transaction } from '../../types'
+
 import Card from './Card'
 
 interface BudgetRow {
@@ -62,7 +64,7 @@ const columns: ColumnDef<BudgetRow>[] = [
     header: () => <span className="block text-right">Status</span>,
     cell: ({ getValue }) =>
       getValue<boolean>() ? (
-        <span className="block text-right text-red-500 font-medium">
+        <span className="block font-medium text-right text-red-500">
           Over ⚠️
         </span>
       ) : (
@@ -109,7 +111,7 @@ function BudgetTable({ budgets, transactions }: BudgetTableProps) {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr
                 key={headerGroup.id}
-                className="border-b border-gray-100 text-left text-gray-500"
+                className="text-left text-gray-500 border-b border-gray-100"
               >
                 {headerGroup.headers.map((header) => (
                   <th key={header.id} className="pb-3 font-medium">
@@ -124,7 +126,10 @@ function BudgetTable({ budgets, transactions }: BudgetTableProps) {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="border-b border-gray-50 last:border-0">
+              <tr
+                key={row.id}
+                className="border-b border-gray-50 last:border-0"
+              >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="py-3">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

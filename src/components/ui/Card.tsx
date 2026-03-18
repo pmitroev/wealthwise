@@ -3,9 +3,11 @@ interface CardProps {
   className?: string
 }
 
-function Card({children, className}: CardProps) {
+function Card({ children, className }: CardProps) {
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 p-5 ${className ?? ''}`}>
+    <div
+      className={`bg-white rounded-2xl shadow-sm border border-gray-100 p-5 ${className ?? ''}`}
+    >
       {children}
     </div>
   )

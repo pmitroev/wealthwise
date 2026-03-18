@@ -79,7 +79,7 @@ function EditCategoryForm({
         registration={register('color')}
       />
 
-      <div className="flex gap-2 mt-2 justify-center">
+      <div className="flex justify-center gap-2 mt-2">
         <Button type="submit" label="Update Category"></Button>
         <Button
           type="button"

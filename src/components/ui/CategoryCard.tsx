@@ -20,7 +20,7 @@ function CategoryCard({ category, onEdit }: CategoryCardProps) {
           <span className="text-xl">{category.icon}</span>
           <span className="text-lg">{category.name}</span>
           <div
-            className="w-5 h-5 rounded-full border border-gray-200"
+            className="w-5 h-5 border border-gray-200 rounded-full"
             style={{ backgroundColor: category.color }}
           />
         </div>

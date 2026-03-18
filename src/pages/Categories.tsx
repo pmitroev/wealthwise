@@ -37,7 +37,7 @@ function Categories() {
       {/* Form — conditionally rendered */}
       {showForm && (
         <Card>
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+          <h2 className="mb-4 text-lg font-semibold text-gray-700">
             New Category
           </h2>
           <AddCategoryForm onSuccess={() => setShowForm(false)} />

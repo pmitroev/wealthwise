@@ -26,7 +26,7 @@ function Budgets() {
       {/* Form — conditionally rendered */}
       {showForm && (
         <Card>
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+          <h2 className="mb-4 text-lg font-semibold text-gray-700">
             New Budget
           </h2>
           <AddBudgetForm

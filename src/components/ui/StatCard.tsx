@@ -20,7 +20,7 @@ function StatCard({ title, amount, type }: StatCardProps) {
 
   return (
     <Card>
-      <p className="text-sm text-gray-500 font-medium mb-1">{title}</p>
+      <p className="mb-1 text-sm font-medium text-gray-500">{title}</p>
       <p className={`text-2xl font-bold ${amountStyles[type]}`}>
         {formattedAmount}
       </p>

@@ -22,7 +22,7 @@ function Dashboard() {
       <h1 className="text-2xl font-bold text-gray-800">📊 Dashboard</h1>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard title="Total Balance" amount={balance} type="balance" />
         <StatCard title="Total Income" amount={totalIncome} type="income" />
         <StatCard
@@ -37,9 +37,9 @@ function Dashboard() {
       </p>
 
       {/* Chart + Recent Transactions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+          <h2 className="mb-4 text-lg font-semibold text-gray-700">
             Spending by Category
           </h2>
           <p>Categories count: {expenseCategories}</p>
@@ -47,7 +47,7 @@ function Dashboard() {
         </Card>
 
         <Card>
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
+          <h2 className="mb-4 text-lg font-semibold text-gray-700">
             Recent Transactions
           </h2>
           <RecentTransactions transactions={state.transactions} />

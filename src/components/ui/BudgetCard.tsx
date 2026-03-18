@@ -63,7 +63,7 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
       </div>
 
       {/* Progress bar */}
-      <div className="w-full bg-gray-100 rounded-full h-2">
+      <div className="w-full h-2 bg-gray-100 rounded-full">
         <div
           className={`h-2 rounded-full transition-all ${isOver ? 'bg-red-500' : 'bg-blue-500'}`}
           style={{ width: `${percentage}%` }}
@@ -76,7 +76,7 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
           {Math.round(percentage)}% used
         </span>
         {isOver && (
-          <span className="text-xs text-red-500 font-medium">
+          <span className="text-xs font-medium text-red-500">
             ⚠️ Over budget!
           </span>
         )}

@@ -4,20 +4,27 @@ interface NavbarProps {
 
 function Navbar({ onMenuClick }: NavbarProps) {
   return (
-    <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-6 fixed top-0 left-0 right-0 z-10">
+    <header className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between h-16 px-6 bg-white border-b border-gray-100">
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:hidden"
+          className="p-2 transition-colors rounded-lg hover:bg-gray-100 md:hidden"
         >
           ☰
         </button>
-        <span className="text-xl font-bold text-blue-600">
-          💰 WealthWise
-        </span>
+        <div className="flex items-center gap-3">
+          <img src="../../../public/logo.png  " alt="logo" />
+          <span className="mt-1 text-xl font-bold text-[#00a7e1]">
+            WealthWise
+          </span>
+        </div>
       </div>
       <span className="text-sm text-gray-500">
-        {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+        {new Date().toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric',
+        })}
       </span>
     </header>
   )

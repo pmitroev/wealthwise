@@ -59,6 +59,7 @@ function AddCategoryForm({ onSuccess }: AddCategoryFormProps) {
       {/* Color */}
       <InputField
         label="Color"
+        type="color"
         error={errors.color?.message}
         registration={register('color')}
       />

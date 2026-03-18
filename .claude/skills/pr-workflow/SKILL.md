@@ -1,6 +1,7 @@
 ---
 name: pr-workflow
 description: When making any code change, create a new branch, commit the changes, open a PR, and review it before merging.
+disable-model-invocation: true
 ---
 
 # PR Workflow Skill

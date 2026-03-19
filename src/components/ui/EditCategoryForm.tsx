@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
+import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
 import { InputField } from './InputField'
@@ -26,7 +26,7 @@ function EditCategoryForm({
   onSuccess,
   onCancel,
 }: EditCategoryFormProps) {
-  const { categoryDispatch } = useTransactions()
+  const updateCategory = useAppStore((s) => s.updateCategory)
 
   const {
     register,
@@ -43,13 +43,7 @@ function EditCategoryForm({
   })
 
   const onSubmit = (data: z.infer<typeof CategorySchema>) => {
-    categoryDispatch({
-      type: 'UPDATE_CATEGORY',
-      payload: {
-        id: category.id,
-        ...data,
-      },
-    })
+    updateCategory({ id: category.id, ...data })
     reset()
     onSuccess?.()
   }

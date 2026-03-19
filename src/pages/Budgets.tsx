@@ -5,10 +5,12 @@ import BudgetCard from '../components/ui/BudgetCard'
 import BudgetTable from '../components/ui/BudgetTable'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
-import { useTransactions } from '../context/TransactionContext'
+import { useAppStore } from '../store/useAppStore'
 
 function Budgets() {
-  const { budgets, state, categories } = useTransactions()
+  const budgets = useAppStore((s) => s.budgets)
+  const categories = useAppStore((s) => s.categories)
+  const transactions = useAppStore((s) => s.transactions)
   const [showForm, setShowForm] = useState(false)
 
   return (
@@ -38,7 +40,7 @@ function Budgets() {
 
       {/* Summary Table */}
       {budgets.length > 0 && (
-        <BudgetTable budgets={budgets} transactions={state.transactions} />
+        <BudgetTable budgets={budgets} transactions={transactions} />
       )}
 
       {/* Budget List */}
@@ -47,7 +49,7 @@ function Budgets() {
           <BudgetCard
             key={budget.id}
             budget={budget}
-            transactions={state.transactions}
+            transactions={transactions}
           />
         ))
       ) : (

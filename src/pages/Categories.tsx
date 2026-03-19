@@ -5,7 +5,7 @@ import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import CategoryCard from '../components/ui/CategoryCard'
 import EditCategoryForm from '../components/ui/EditCategoryForm'
-import { useTransactions } from '../context/TransactionContext'
+import { useAppStore } from '../store/useAppStore'
 import type { Category } from '../types'
 
 function Categories() {
@@ -17,7 +17,7 @@ function Categories() {
     [setEditingCategory]
   )
 
-  const { categories } = useTransactions()
+  const categories = useAppStore((s) => s.categories)
 
   return (
     <div className="flex flex-col gap-4">

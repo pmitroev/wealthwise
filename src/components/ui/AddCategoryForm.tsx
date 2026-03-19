@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { useTransactions } from '../../context/TransactionContext'
+import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
 import { InputField } from './InputField'
@@ -19,7 +19,7 @@ interface AddCategoryFormProps {
 }
 
 function AddCategoryForm({ onSuccess }: AddCategoryFormProps) {
-  const { categoryDispatch } = useTransactions()
+  const addCategory = useAppStore((s) => s.addCategory)
   const {
     register,
     handleSubmit,
@@ -30,13 +30,7 @@ function AddCategoryForm({ onSuccess }: AddCategoryFormProps) {
   })
 
   const onSubmit = (data: z.infer<typeof CategorySchema>) => {
-    categoryDispatch({
-      type: 'ADD_CATEGORY',
-      payload: {
-        id: crypto.randomUUID(),
-        ...data,
-      },
-    })
+    addCategory({ id: crypto.randomUUID(), ...data })
     reset()
     onSuccess?.()
   }

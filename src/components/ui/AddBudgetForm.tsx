@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
+import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
 import { InputField } from './InputField'
@@ -25,7 +25,7 @@ interface AddBudgetFormProps {
 }
 
 function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
-  const { budgetDispatch } = useTransactions()
+  const addBudget = useAppStore((s) => s.addBudget)
 
   const {
     register,
@@ -37,13 +37,7 @@ function AddBudgetForm({ onSuccess, categories }: AddBudgetFormProps) {
   })
 
   const onSubmit = (data: z.infer<typeof BudgetSchema>) => {
-    budgetDispatch({
-      type: 'ADD_BUDGET',
-      payload: {
-        id: crypto.randomUUID(),
-        ...data,
-      },
-    })
+    addBudget({ id: crypto.randomUUID(), ...data })
     reset()
     onSuccess?.()
   }

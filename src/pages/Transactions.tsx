@@ -4,6 +4,8 @@ import AddTransactionForm from '../components/ui/AddTransactionForm'
 import Badge from '../components/ui/Badge'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
+import { toast } from 'sonner'
+
 import { useAppStore } from '../store/useAppStore'
 
 function Transactions() {
@@ -95,7 +97,10 @@ function Transactions() {
                 <Button
                   label="Delete"
                   variant="ghost"
-                  onClick={() => deleteTransaction(transaction.id)}
+                  onClick={() => {
+                    deleteTransaction(transaction.id)
+                    toast.success('Transaction deleted')
+                  }}
                 />
               </div>
             </div>

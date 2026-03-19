@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { toast } from 'sonner'
+
 import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
@@ -31,6 +33,7 @@ function AddCategoryForm({ onSuccess }: AddCategoryFormProps) {
 
   const onSubmit = (data: z.infer<typeof CategorySchema>) => {
     addCategory({ id: crypto.randomUUID(), ...data })
+    toast.success('Category added')
     reset()
     onSuccess?.()
   }

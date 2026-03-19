@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Toaster } from 'sonner'
 
 import Layout from './components/layout/Layout'
 import Budgets from './pages/Budgets'
@@ -8,6 +9,8 @@ import Transactions from './pages/Transactions'
 
 function App() {
   return (
+    <>
+    <Toaster position="bottom-right" richColors />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -18,6 +21,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </>
   )
 }
 

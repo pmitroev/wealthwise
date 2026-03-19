@@ -1,3 +1,5 @@
+import { toast } from 'sonner'
+
 import type { Category } from '../../types'
 import { useAppStore } from '../../store/useAppStore'
 
@@ -35,9 +37,10 @@ function CategoryCard({ category, onEdit }: CategoryCardProps) {
           <Button
             label="Delete"
             variant="ghost"
-            onClick={() =>
+            onClick={() => {
               deleteCategory(category.id)
-            }
+              toast.success('Category deleted')
+            }}
           />
         </div>
       </div>

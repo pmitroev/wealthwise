@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 
+import { toast } from 'sonner'
+
 import type { Budget, Transaction } from '../../types'
 import { useAppStore } from '../../store/useAppStore'
 
@@ -52,9 +54,10 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
           <Button
             label="Delete"
             variant="ghost"
-            onClick={() =>
+            onClick={() => {
               deleteBudget(budget.id)
-            }
+              toast.success('Budget deleted')
+            }}
           />
         </div>
       </div>

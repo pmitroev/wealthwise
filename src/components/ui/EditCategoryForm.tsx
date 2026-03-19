@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { toast } from 'sonner'
+
 import type { Category } from '../../types'
 import { useAppStore } from '../../store/useAppStore'
 
@@ -44,6 +46,7 @@ function EditCategoryForm({
 
   const onSubmit = (data: z.infer<typeof CategorySchema>) => {
     updateCategory({ id: category.id, ...data })
+    toast.success('Category updated')
     reset()
     onSuccess?.()
   }

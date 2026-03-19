@@ -16,6 +16,7 @@ https://wealthwise-beryl.vercel.app/
 - React Hook Form
 - Zod
 - Recharts
+- Zustand
 
 ## Features
 
@@ -40,16 +41,19 @@ https://wealthwise-beryl.vercel.app/
 
 - Smart — knows about data, has logic, talks to context
 - Dumb — knows only about props, never imports from context, reusable anywhere
-- Component tree — App → Provider → BrowserRouter → Routes → Layout → Pages → Components
+- Component tree — App → BrowserRouter → Routes → Layout → Pages → Components
 - `React.ReactNode` — widest children type, accepts everything React can render
 - `styles[variant]` — type-safe lookup, avoids if/else chains
 
-### State & Context
+### State Management
 
 - `useReducer` — three parts: state, action, reducer
 - Never mutate — React detects changes by reference, mutation keeps same reference so no re-render
 - Dispatch flow — dispatch → reducer → new state → re-render
 - Context shares state, useReducer manages it
+- Zustand — global store without a provider, `create` defines state and actions together
+- Selector pattern — `useStore((s) => s.slice)` subscribes only to the slice you need, preventing unnecessary re-renders
+- `persist` middleware — wraps the store to sync state to localStorage automatically
 
 ### Hooks
 
@@ -77,7 +81,7 @@ https://wealthwise-beryl.vercel.app/
 ### Architecture
 
 - `types/` — data models, unions, action types
-- `context/` — state + dispatch, read and trigger changes
+- `store/` — Zustand store, all global state and actions in one place
 - `hooks/` — start with `use`, can call other hooks
 - `components/ui/` — dumb, props only, never touch context
 - `components/layout/` — shell, `Outlet` renders pages inside

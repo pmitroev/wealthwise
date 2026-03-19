@@ -6,17 +6,19 @@ import { useAppStore } from '../store/useAppStore'
 
 function Dashboard() {
   const transactions = useAppStore((s) => s.transactions)
-  const totalIncome = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0)
-  const totalExpenses = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0)
+  const totalIncome = transactions
+    .filter((t) => t.type === 'income')
+    .reduce((sum, t) => sum + t.amount, 0)
+  const totalExpenses = transactions
+    .filter((t) => t.type === 'expense')
+    .reduce((sum, t) => sum + t.amount, 0)
   const balance = totalIncome - totalExpenses
 
   const transactionsCount = transactions.length
 
   const expenseCategories = [
     ...new Set(
-      transactions
-        .filter((t) => t.type === 'expense')
-        .map((t) => t.category)
+      transactions.filter((t) => t.type === 'expense').map((t) => t.category)
     ),
   ].length
 

@@ -12,7 +12,10 @@ function Transactions() {
   const setFilter = useAppStore((s) => s.setFilter)
   const deleteTransaction = useAppStore((s) => s.deleteTransaction)
   const transactions = useAppStore((s) => s.transactions)
-  const filteredTransactions = filter === 'all' ? transactions : transactions.filter((t) => t.type === filter)
+  const filteredTransactions =
+    filter === 'all'
+      ? transactions
+      : transactions.filter((t) => t.type === filter)
   const [showForm, setShowForm] = useState(false)
   const currentFilter = filter
 
@@ -46,23 +49,17 @@ function Transactions() {
         <Button
           label="All"
           variant={currentFilter === 'all' ? 'primary' : 'ghost'}
-          onClick={() =>
-            setFilter('all')
-          }
+          onClick={() => setFilter('all')}
         />
         <Button
           label="Income"
           variant={currentFilter === 'income' ? 'primary' : 'ghost'}
-          onClick={() =>
-            setFilter('income')
-          }
+          onClick={() => setFilter('income')}
         />
         <Button
           label="Expense"
           variant={currentFilter === 'expense' ? 'primary' : 'ghost'}
-          onClick={() =>
-            setFilter('expense')
-          }
+          onClick={() => setFilter('expense')}
         />
       </div>
       {/* Transaction List */}
@@ -98,9 +95,7 @@ function Transactions() {
                 <Button
                   label="Delete"
                   variant="ghost"
-                  onClick={() =>
-                    deleteTransaction(transaction.id)
-                  }
+                  onClick={() => deleteTransaction(transaction.id)}
                 />
               </div>
             </div>

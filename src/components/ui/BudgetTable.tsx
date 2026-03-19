@@ -85,7 +85,7 @@ function BudgetTable({ budgets, transactions }: BudgetTableProps) {
         const spent = transactions
           .filter((t) => t.category === budget.category && t.type === 'expense')
           .reduce((sum, t) => sum + t.amount, 0)
-        const remaining = budget.limit - spent
+        const remaining = Math.max(0, budget.limit - spent)
         return {
           category: budget.category,
           limit: budget.limit,

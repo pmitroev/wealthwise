@@ -35,7 +35,9 @@ export const useAppStore = create<AppState>()(
       addTransaction: (t) =>
         set((s) => ({ transactions: [t, ...s.transactions] })),
       deleteTransaction: (id) =>
-        set((s) => ({ transactions: s.transactions.filter((t) => t.id !== id) })),
+        set((s) => ({
+          transactions: s.transactions.filter((t) => t.id !== id),
+        })),
       setFilter: (filter) => set({ filter }),
 
       addBudget: (b) => set((s) => ({ budgets: [b, ...s.budgets] })),

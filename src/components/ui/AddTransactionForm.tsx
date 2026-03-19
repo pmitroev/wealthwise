@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
+import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
 import { InputField } from './InputField'
@@ -32,7 +32,7 @@ function AddTransactionForm({
   categories,
   onSuccess,
 }: AddTransactionFormProps) {
-  const { dispatch } = useTransactions()
+  const addTransaction = useAppStore((s) => s.addTransaction)
 
   const {
     register,
@@ -48,13 +48,7 @@ function AddTransactionForm({
   })
 
   const onSubmit = (data: z.infer<typeof TransactionSchema>) => {
-    dispatch({
-      type: 'ADD_TRANSACTION',
-      payload: {
-        id: crypto.randomUUID(), // built-in browser API for unique IDs
-        ...data,
-      },
-    })
+    addTransaction({ id: crypto.randomUUID(), ...data })
     reset()
     onSuccess?.() // 👈 optional chaining — calls it only if it was passed
   }

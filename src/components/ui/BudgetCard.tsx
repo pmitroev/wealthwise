@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
-import { useTransactions } from '../../context/TransactionContext'
 import type { Budget, Transaction } from '../../types'
+import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
 import Card from './Card'
@@ -12,7 +12,7 @@ interface BudgetCardProps {
 }
 
 function BudgetCard({ budget, transactions }: BudgetCardProps) {
-  const { budgetDispatch } = useTransactions()
+  const deleteBudget = useAppStore((s) => s.deleteBudget)
 
   const spent = useMemo(
     () =>
@@ -53,10 +53,7 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
             label="Delete"
             variant="ghost"
             onClick={() =>
-              budgetDispatch({
-                type: 'DELETE_BUDGET',
-                payload: budget.id,
-              })
+              deleteBudget(budget.id)
             }
           />
         </div>

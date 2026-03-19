@@ -4,13 +4,17 @@ import AddTransactionForm from '../components/ui/AddTransactionForm'
 import Badge from '../components/ui/Badge'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
-import { useTransactions } from '../context/TransactionContext'
+import { useAppStore } from '../store/useAppStore'
 
 function Transactions() {
-  const { filteredTransactions, dispatch, state, categories } =
-    useTransactions()
+  const categories = useAppStore((s) => s.categories)
+  const filter = useAppStore((s) => s.filter)
+  const setFilter = useAppStore((s) => s.setFilter)
+  const deleteTransaction = useAppStore((s) => s.deleteTransaction)
+  const transactions = useAppStore((s) => s.transactions)
+  const filteredTransactions = filter === 'all' ? transactions : transactions.filter((t) => t.type === filter)
   const [showForm, setShowForm] = useState(false)
-  const currentFilter = state.filter
+  const currentFilter = filter
 
   return (
     <div className="flex flex-col gap-4">
@@ -43,30 +47,21 @@ function Transactions() {
           label="All"
           variant={currentFilter === 'all' ? 'primary' : 'ghost'}
           onClick={() =>
-            dispatch({
-              type: 'SET_FILTER',
-              payload: 'all',
-            })
+            setFilter('all')
           }
         />
         <Button
           label="Income"
           variant={currentFilter === 'income' ? 'primary' : 'ghost'}
           onClick={() =>
-            dispatch({
-              type: 'SET_FILTER',
-              payload: 'income',
-            })
+            setFilter('income')
           }
         />
         <Button
           label="Expense"
           variant={currentFilter === 'expense' ? 'primary' : 'ghost'}
           onClick={() =>
-            dispatch({
-              type: 'SET_FILTER',
-              payload: 'expense',
-            })
+            setFilter('expense')
           }
         />
       </div>
@@ -104,10 +99,7 @@ function Transactions() {
                   label="Delete"
                   variant="ghost"
                   onClick={() =>
-                    dispatch({
-                      type: 'DELETE_TRANSACTION',
-                      payload: transaction.id,
-                    })
+                    deleteTransaction(transaction.id)
                   }
                 />
               </div>

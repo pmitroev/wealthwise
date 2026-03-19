@@ -1,5 +1,5 @@
-import { useTransactions } from '../../context/TransactionContext'
 import type { Category } from '../../types'
+import { useAppStore } from '../../store/useAppStore'
 
 import Button from './Button'
 import Card from './Card'
@@ -10,7 +10,7 @@ interface CategoryCardProps {
 }
 
 function CategoryCard({ category, onEdit }: CategoryCardProps) {
-  const { categoryDispatch } = useTransactions()
+  const deleteCategory = useAppStore((s) => s.deleteCategory)
 
   return (
     <Card>
@@ -36,10 +36,7 @@ function CategoryCard({ category, onEdit }: CategoryCardProps) {
             label="Delete"
             variant="ghost"
             onClick={() =>
-              categoryDispatch({
-                type: 'DELETE_CATEGORY',
-                payload: category.id,
-              })
+              deleteCategory(category.id)
             }
           />
         </div>

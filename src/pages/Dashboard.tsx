@@ -2,16 +2,19 @@ import Card from '../components/ui/Card'
 import ExpenseChart from '../components/ui/ExpenseChart'
 import RecentTransactions from '../components/ui/RecentTransactions'
 import StatCard from '../components/ui/StatCard'
-import { useTransactions } from '../context/TransactionContext'
+import { useAppStore } from '../store/useAppStore'
 
 function Dashboard() {
-  const { balance, totalIncome, totalExpenses, state } = useTransactions()
+  const transactions = useAppStore((s) => s.transactions)
+  const totalIncome = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0)
+  const totalExpenses = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0)
+  const balance = totalIncome - totalExpenses
 
-  const transactionsCount = state.transactions.length
+  const transactionsCount = transactions.length
 
   const expenseCategories = [
     ...new Set(
-      state.transactions
+      transactions
         .filter((t) => t.type === 'expense')
         .map((t) => t.category)
     ),
@@ -43,14 +46,14 @@ function Dashboard() {
             Spending by Category
           </h2>
           <p>Categories count: {expenseCategories}</p>
-          <ExpenseChart transactions={state.transactions} />
+          <ExpenseChart transactions={transactions} />
         </Card>
 
         <Card>
           <h2 className="mb-4 text-lg font-semibold text-gray-700">
             Recent Transactions
           </h2>
-          <RecentTransactions transactions={state.transactions} />
+          <RecentTransactions transactions={transactions} />
         </Card>
       </div>
     </div>

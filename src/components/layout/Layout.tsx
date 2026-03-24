@@ -13,7 +13,7 @@ function Layout() {
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <main className="min-h-screen pt-16 md:pl-56">
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <Outlet />
         </div>
       </main>

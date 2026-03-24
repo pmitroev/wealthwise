@@ -106,7 +106,7 @@ function BudgetTable({ budgets, transactions }: BudgetTableProps) {
   return (
     <Card>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-120 text-sm">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr

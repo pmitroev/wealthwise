@@ -14,14 +14,15 @@ function Navbar({ onMenuClick }: NavbarProps) {
         >
           ☰
         </button>
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="logo" />
-          <span className="mt-1 text-xl font-bold text-[#00a7e1]">
-            WealthWise
+        <div className="flex items-center">
+          <img src={logo} alt="logo" className="h-8 w-auto" />
+          <span className="mt-1 pl-3 text-xl font-bold text-[#50b0eb]">
+            Wealth
           </span>
+          <span className="mt-1 text-xl font-bold text-[#ffbd58]">Wise</span>
         </div>
       </div>
-      <span className="text-sm text-gray-500">
+      <span className="hidden sm:block text-sm text-gray-500">
         {new Date().toLocaleDateString('en-US', {
           weekday: 'long',
           month: 'long',

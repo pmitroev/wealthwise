@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { toast } from 'sonner'
-
-import type { Category } from '../../types'
 import { useAppStore } from '../../store/useAppStore'
+import type { Category } from '../../types'
 
 import Button from './Button'
 import { InputField } from './InputField'

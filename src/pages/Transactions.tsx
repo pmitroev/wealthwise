@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
+import { toast } from 'sonner'
+
 import AddTransactionForm from '../components/ui/AddTransactionForm'
 import Badge from '../components/ui/Badge'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
-import { toast } from 'sonner'
-
 import { useAppStore } from '../store/useAppStore'
 
 function Transactions() {
@@ -69,8 +69,8 @@ function Transactions() {
         filteredTransactions.map((transaction) => (
           <Card key={transaction.id}>
             <div className="flex items-center justify-between">
-              <div className="flex flex-col gap-1">
-                <p className="font-medium text-gray-800">
+              <div className="flex flex-col gap-1 min-w-0">
+                <p className="font-medium text-gray-800 truncate">
                   {transaction.description ?? 'No description'}
                 </p>
                 <div className="flex items-center gap-2">
@@ -83,7 +83,7 @@ function Transactions() {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 shrink-0">
                 <p
                   className={`font-bold text-lg ${
                     transaction.type === 'income'

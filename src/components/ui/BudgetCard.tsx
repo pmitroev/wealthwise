@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
+import React from 'react'
 
 import { toast } from 'sonner'
 
-import type { Budget, Transaction } from '../../types'
 import { useAppStore } from '../../store/useAppStore'
+import type { Budget, Transaction } from '../../types'
 
 import Button from './Button'
 import Card from './Card'
@@ -13,7 +14,10 @@ interface BudgetCardProps {
   transactions: Transaction[]
 }
 
-function BudgetCard({ budget, transactions }: BudgetCardProps) {
+const BudgetCard = React.memo(function BudgetCard({
+  budget,
+  transactions,
+}: BudgetCardProps) {
   const deleteBudget = useAppStore((s) => s.deleteBudget)
 
   const spent = useMemo(
@@ -42,7 +46,7 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
         </div>
 
         {/* Right — amounts + delete */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <div className="text-right">
             <p
               className={`font-bold text-lg ${isOver ? 'text-red-500' : 'text-gray-800'}`}
@@ -83,6 +87,6 @@ function BudgetCard({ budget, transactions }: BudgetCardProps) {
       </div>
     </Card>
   )
-}
+})
 
 export default BudgetCard

@@ -16,8 +16,8 @@ function RecentTransactions({ transactions }: RecentTransactionsProps) {
           key={transaction.id}
           className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0"
         >
-          <div className="flex flex-col gap-0.5">
-            <p className="text-sm font-medium text-gray-800">
+          <div className="flex flex-col gap-0.5 min-w-0">
+            <p className="text-sm font-medium text-gray-800 truncate">
               {transaction.description ?? 'No description'}
             </p>
             <div className="flex items-center gap-2">
@@ -26,7 +26,7 @@ function RecentTransactions({ transactions }: RecentTransactionsProps) {
             </div>
           </div>
           <p
-            className={`font-semibold ${
+            className={`font-semibold shrink-0 ${
               transaction.type === 'income' ? 'text-green-600' : 'text-red-500'
             }`}
           >

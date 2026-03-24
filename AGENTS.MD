@@ -2,7 +2,7 @@
 
 ## Stack
 
-React 19, TypeScript, Vite, Tailwind CSS v4, React Router v6, React Hook Form, Zod, Recharts
+React 19, TypeScript, Vite, Tailwind CSS v4, React Router v6, React Hook Form, Zod, Recharts, Zustand
 
 ## Package manager
 
@@ -32,7 +32,7 @@ Never commit directly to main.
 ## Project structure
 
 - src/types — data models, unions, action types
-- src/context — global state + dispatch
+- src/store — zustand app store with actions
 - src/hooks — custom hooks
 - src/components/ui — dumb reusable components, props only
 - src/components/layout — Navbar, Sidebar, Layout

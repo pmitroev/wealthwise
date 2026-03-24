@@ -1,7 +1,9 @@
+import React from 'react'
+
 import { toast } from 'sonner'
 
-import type { Category } from '../../types'
 import { useAppStore } from '../../store/useAppStore'
+import type { Category } from '../../types'
 
 import Button from './Button'
 import Card from './Card'
@@ -11,7 +13,10 @@ interface CategoryCardProps {
   onEdit: (category: Category) => void
 }
 
-function CategoryCard({ category, onEdit }: CategoryCardProps) {
+const CategoryCard = React.memo(function CategoryCard({
+  category,
+  onEdit,
+}: CategoryCardProps) {
   const deleteCategory = useAppStore((s) => s.deleteCategory)
 
   return (
@@ -46,6 +51,6 @@ function CategoryCard({ category, onEdit }: CategoryCardProps) {
       </div>
     </Card>
   )
-}
+})
 
 export default CategoryCard
